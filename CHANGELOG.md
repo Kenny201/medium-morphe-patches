@@ -1,3 +1,14 @@
+## [1.1.0](https://github.com/Kenny201/medium-morphe-patches/compare/v1.0.1...v1.1.0) (2026-11-08)
+
+### ✨ New Features
+
+* Implement native Member-only paywall bypass and DonkeyApplication lifecycle injection ([8debbc9](https://github.com/Kenny201/medium-morphe-patches/commit/8debbc9cea9fad5d967b21469b0065d8dec7199a))
+* Release new patches with JohnInNL paywall bypass ([841a9ef](https://github.com/Kenny201/medium-morphe-patches/commit/841a9ef9723f8e1a9e9dd01f51773ff0093c4e3b))
+
+### 🐛 Bug Fixes
+
+* Improve ActivityOnCreate fingerprint and robust UI injection ([cdd23ff](https://github.com/Kenny201/medium-morphe-patches/commit/cdd23ffc3bac19a3bbe37e323c666fd49b171eea))
+
 ## [1.1.0-dev.1](https://github.com/Kenny201/medium-morphe-patches/compare/v1.0.0...v1.1.0-dev.1) (2026-11-08)
 
 ### ✨ New Features
