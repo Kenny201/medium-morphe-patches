@@ -25,12 +25,15 @@ val translatePatch = patch(
     )
 
     execute {
-        // Safely try to match Activity onResume fingerprint
-        ActivityOnResumeFingerprint.matchOrNull()?.method?.addInstructions(
-            0,
-            """
-                invoke-static {p0}, $EXTENSION_CLASS->onActivityResumed(Landroid/app/Activity;)V
-            """
-        )
+        // Initialize lifecycle callbacks on app start
+        DonkeyApplicationFingerprint.matchAllOrNull()?.forEach { match ->
+            match.method.addInstructions(
+                0,
+                """
+                    move-object/from16 v0, p0
+                    invoke-static {v0}, $EXTENSION_CLASS->init(Landroid/app/Application;)V
+                """
+            )
+        }
     }
 }
