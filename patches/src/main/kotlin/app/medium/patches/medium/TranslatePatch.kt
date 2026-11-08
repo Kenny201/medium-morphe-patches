@@ -25,8 +25,8 @@ val translatePatch = patch(
     )
 
     execute {
-        // Inject floating translation button and article translator into Activity lifecycle
-        ActivityOnResumeFingerprint.method.addInstructions(
+        // Safely try to match Activity onResume fingerprint
+        ActivityOnResumeFingerprint.matchOrNull()?.method?.addInstructions(
             0,
             """
                 invoke-static {p0}, $EXTENSION_CLASS->onActivityResumed(Landroid/app/Activity;)V
