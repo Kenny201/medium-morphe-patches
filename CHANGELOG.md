@@ -1,3 +1,9 @@
+## [1.0.2-dev.1](https://github.com/Kenny201/medium-morphe-patches/compare/v1.0.1...v1.0.2-dev.1) (2026-11-08)
+
+### 🐛 Bug Fixes
+
+* Remove open_pull_request.yml workflow to prevent automated PR conflicts ([8ec4d09](https://github.com/Kenny201/medium-morphe-patches/commit/8ec4d093899079075a9c96e48ae8b328811adead))
+
 ## [1.2.1-dev.1](https://github.com/Kenny201/medium-morphe-patches/compare/v1.2.0...v1.2.1-dev.1) (2026-11-08)
 
 ### 🐛 Bug Fixes
