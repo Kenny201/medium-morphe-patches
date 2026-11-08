@@ -17,8 +17,8 @@ val paywallBypassPatch = patch(
     extendWith("extensions/extension.mpe")
 
     execute {
-        // Safely try to match fingerprint without throwing fatal PatchException if version differs
-        PaywallCheckFingerprint.matchOrNull()?.method?.addInstructions(
+        // If article model has lock check, bypass it
+        ArticleModelFingerprint.matchOrNull()?.method?.addInstructions(
             0,
             """
                 const/4 v0, 0x0

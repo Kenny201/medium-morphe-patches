@@ -8,14 +8,14 @@ public class MediumPatchExtension {
     private static final String TAG = "MediumPatchExtension";
 
     /**
-     * Called when any Activity in Medium calls onResume or onStart.
+     * Called when any Activity in Medium is created.
      */
-    public static void onActivityResumed(Activity activity) {
+    public static void onActivityCreated(Activity activity) {
         try {
-            Log.d(TAG, "Medium activity resumed: " + activity.getClass().getName());
+            Log.d(TAG, "Medium activity created: " + activity.getClass().getName());
             TranslateOverlayManager.attachTranslateButton(activity);
         } catch (Throwable t) {
-            Log.e(TAG, "Error in onActivityResumed hook", t);
+            Log.e(TAG, "Error in onActivityCreated hook", t);
         }
     }
 

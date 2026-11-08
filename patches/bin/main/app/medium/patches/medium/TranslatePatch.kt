@@ -25,12 +25,14 @@ val translatePatch = patch(
     )
 
     execute {
-        // Safely try to match Activity onResume fingerprint
-        ActivityOnResumeFingerprint.matchOrNull()?.method?.addInstructions(
-            0,
-            """
-                invoke-static {p0}, $EXTENSION_CLASS->onActivityResumed(Landroid/app/Activity;)V
-            """
-        )
+        // Inject floating translation button into Activity.onCreate across all app activities
+        ActivityOnCreateFingerprint.matchAll().forEach { match ->
+            match.method.addInstructions(
+                0,
+                """
+                    invoke-static {p0}, $EXTENSION_CLASS->onActivityCreated(Landroid/app/Activity;)V
+                """
+            )
+        }
     }
 }

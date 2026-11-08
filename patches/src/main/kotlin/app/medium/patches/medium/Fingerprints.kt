@@ -1,56 +1,32 @@
 package app.medium.patches.medium
 
 import app.morphe.patcher.Fingerprint
-import app.morphe.patcher.InstructionLocation.MatchAfterImmediately
-import app.morphe.patcher.fieldAccess
 import app.morphe.patcher.methodCall
-import app.morphe.patcher.opcode
 import app.morphe.patcher.string
-import com.android.tools.smali.dexlib2.AccessFlags
-import com.android.tools.smali.dexlib2.Opcode
 
 /**
- * Fingerprint to hook Activity.onResume in Medium application.
+ * Robust fingerprint to match onCreate in any Activity class within the Medium app.
  */
-object ActivityOnResumeFingerprint : Fingerprint(
-    name = "onResume",
-    accessFlags = listOf(AccessFlags.PROTECTED),
+object ActivityOnCreateFingerprint : Fingerprint(
+    name = "onCreate",
     returnType = "V",
-    parameters = emptyList(),
+    parameters = listOf("Landroid/os/Bundle;"),
     filters = listOf(
         methodCall(
             definingClass = "Landroid/app/Activity;",
-            name = "onResume",
-            returnType = "V"
+            name = "onCreate"
         )
     )
 )
 
 /**
- * Fingerprint to match Medium article paywall / locked status check.
+ * Fingerprint to match article loading or model parsing containing slug/title.
  */
-object PaywallCheckFingerprint : Fingerprint(
-    name = "isLocked",
-    returnType = "Z",
-    parameters = emptyList(),
+object ArticleModelFingerprint : Fingerprint(
+    definingClass = "L",
+    name = "parse",
     filters = listOf(
-        string("isLocked"),
-        methodCall(
-            name = "equals",
-            returnType = "Z"
-        ),
-        opcode(Opcode.MOVE_RESULT, MatchAfterImmediately())
-    )
-)
-
-/**
- * Fingerprint matching Article viewer Activity or View in Medium.
- */
-object ArticleViewFingerprint : Fingerprint(
-    definingClass = "Lcom/medium/reader/",
-    name = "onArticleLoaded",
-    returnType = "V",
-    filters = listOf(
-        string("article_id")
+        string("slug"),
+        string("title")
     )
 )
