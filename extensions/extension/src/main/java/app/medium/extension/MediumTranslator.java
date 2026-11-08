@@ -23,7 +23,7 @@ public class MediumTranslator {
     private static final Map<String, String> cache = new ConcurrentHashMap<>();
     private static final ExecutorService executor = Executors.newFixedThreadPool(4);
 
-    private static String defaultTargetLanguage = "ru"; // Default language: Russian
+    private static String defaultTargetLanguage = "ru";
 
     public static void setTargetLanguage(String lang) {
         if (lang != null && !lang.trim().isEmpty()) {
@@ -40,9 +40,6 @@ public class MediumTranslator {
         void onError(Exception e);
     }
 
-    /**
-     * Synchronously translate a string of text into target language.
-     */
     public static String translateText(String text, String targetLang) {
         if (text == null || text.trim().isEmpty()) {
             return text;
@@ -52,6 +49,28 @@ public class MediumTranslator {
             targetLang = defaultTargetLanguage;
         }
 
+        if (text.length() > 1500) {
+            StringBuilder result = new StringBuilder();
+            String[] paragraphs = text.split("\n");
+            StringBuilder chunk = new StringBuilder();
+
+            for (String p : paragraphs) {
+                if (chunk.length() + p.length() > 1500) {
+                    result.append(translateChunk(chunk.toString(), targetLang)).append("\n");
+                    chunk = new StringBuilder();
+                }
+                chunk.append(p).append("\n");
+            }
+            if (chunk.length() > 0) {
+                result.append(translateChunk(chunk.toString(), targetLang));
+            }
+            return result.toString();
+        }
+
+        return translateChunk(text, targetLang);
+    }
+
+    private static String translateChunk(String text, String targetLang) {
         String cacheKey = targetLang + ":" + text;
         if (cache.containsKey(cacheKey)) {
             return cache.get(cacheKey);
@@ -64,8 +83,8 @@ public class MediumTranslator {
             URL url = new URL(apiUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
-            conn.setConnectTimeout(5000);
-            conn.setReadTimeout(5000);
+            conn.setConnectTimeout(8000);
+            conn.setReadTimeout(8000);
             conn.setRequestProperty("User-Agent", 
                 "Mozilla/5.0 (Android; Mobile; rv:120.0) Gecko/120.0 Firefox/120.0");
 
@@ -89,47 +108,35 @@ public class MediumTranslator {
                 Log.e(TAG, "Translation HTTP error: " + responseCode);
             }
         } catch (Exception e) {
-            Log.e(TAG, "Failed to translate text", e);
+            Log.e(TAG, "Failed to translate chunk", e);
         }
 
-        return text; // Fallback to original text on failure
+        return text;
     }
 
-    /**
-     * Asynchronously translate text.
-     */
     public static void translateTextAsync(final String text, final String targetLang, final TranslationCallback callback) {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    String result = translateText(text, targetLang);
-                    if (callback != null) {
-                        callback.onSuccess(result);
-                    }
-                } catch (Exception e) {
-                    if (callback != null) {
-                        callback.onError(e);
-                    }
+        executor.execute(() -> {
+            try {
+                String result = translateText(text, targetLang);
+                if (callback != null) {
+                    callback.onSuccess(result);
+                }
+            } catch (Exception e) {
+                if (callback != null) {
+                    callback.onError(e);
                 }
             }
         });
     }
 
-    /**
-     * Parse Google Translate GTX API JSON response.
-     * Response format: [[["Translated text","Original text",null,null,3]],null,"en",...]
-     */
     private static String parseGoogleTranslateJson(String jsonStr) {
         try {
             StringBuilder result = new StringBuilder();
-            // Match phrases in the double nested array: [["...","...",...]]
             Pattern pattern = Pattern.compile("\\[\\[\"(.*?)\",\"(.*?)\"");
             Matcher matcher = pattern.matcher(jsonStr);
 
             while (matcher.find()) {
                 String translatedSegment = matcher.group(1);
-                // Unescape JSON escaped quotes and backslashes
                 translatedSegment = unescapeJson(translatedSegment);
                 result.append(translatedSegment);
             }
