@@ -1,3 +1,14 @@
+## [1.2.0](https://github.com/Kenny201/medium-morphe-patches/compare/v1.1.0...v1.2.0) (2026-11-08)
+
+### ✨ New Features
+
+* Wrap PostFragment and PostPageFragment2 article view surfaces for translation button ([33d8c2d](https://github.com/Kenny201/medium-morphe-patches/commit/33d8c2db4920ac51ae92a6839b7b4db15fb931cd))
+
+### 🐛 Bug Fixes
+
+* Remove morphe-signing.pub to disable mandatory release signing for CI ([a1c2440](https://github.com/Kenny201/medium-morphe-patches/commit/a1c2440cebdbd69465aaa4128bf6c7329c564132))
+* Remove problematic backmerge plugin from semantic-release config ([4e4e9a3](https://github.com/Kenny201/medium-morphe-patches/commit/4e4e9a32b690a04a048621d55848560c5cd4970f))
+
 ## [1.1.0](https://github.com/Kenny201/medium-morphe-patches/compare/v1.0.1...v1.1.0) (2026-11-08)
 
 ### ✨ New Features
