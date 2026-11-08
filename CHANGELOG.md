@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/Kenny201/medium-morphe-patches/compare/v1.2.0...v1.2.1) (2026-11-08)
+
+### 🐛 Bug Fixes
+
+* Add chunking to MediumTranslator to prevent URI Too Long / HTTP 400 errors ([5c17ef8](https://github.com/Kenny201/medium-morphe-patches/commit/5c17ef8bba3b373c9d1ffca17a6ad135b7729b31))
+* Add INTERNET permission to AndroidManifest for Google Translate API ([d433b99](https://github.com/Kenny201/medium-morphe-patches/commit/d433b99d71b5a5c647b991ab7821818ca5756261))
+
 ## [1.2.0](https://github.com/Kenny201/medium-morphe-patches/compare/v1.1.0...v1.2.0) (2026-11-08)
 
 ### ✨ New Features
