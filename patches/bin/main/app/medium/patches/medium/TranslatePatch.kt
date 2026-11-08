@@ -25,12 +25,13 @@ val translatePatch = patch(
     )
 
     execute {
-        // Inject floating translation button into Activity.onCreate across all app activities
-        ActivityOnCreateFingerprint.matchAll().forEach { match ->
+        // Initialize lifecycle callbacks on app start
+        DonkeyApplicationFingerprint.matchAllOrNull()?.forEach { match ->
             match.method.addInstructions(
                 0,
                 """
-                    invoke-static {p0}, $EXTENSION_CLASS->onActivityCreated(Landroid/app/Activity;)V
+                    move-object/from16 v0, p0
+                    invoke-static {v0}, $EXTENSION_CLASS->init(Landroid/app/Application;)V
                 """
             )
         }
