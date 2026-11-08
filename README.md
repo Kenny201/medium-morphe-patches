@@ -20,6 +20,7 @@ Click the button below, or manually add this repo url to Morphe Manager: https:/
 
 <!-- PATCHES_START EXPANDED -->
 > **[v1.0.1-dev.1](https://github.com/Kenny201/medium-morphe-patches/releases/tag/v1.0.1-dev.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;2 patches total
+
 <details open>
 <summary>📦 Medium&nbsp;&nbsp;•&nbsp;&nbsp;2 patches</summary>
 <br>
