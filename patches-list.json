@@ -1,10 +1,10 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (release.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "patches": [
     {
       "name": "Bypass paywall",
-      "description": "Bypasses Medium paywall for member-only articles via Freedium proxy.",
+      "description": "Unlocks full articles natively by mocking user's MembershipTier to MEMBER.",
       "default": true,
       "category": null,
       "compatiblePackages": [

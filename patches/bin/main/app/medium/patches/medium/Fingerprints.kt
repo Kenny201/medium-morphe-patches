@@ -1,56 +1,43 @@
 package app.medium.patches.medium
 
 import app.morphe.patcher.Fingerprint
-import app.morphe.patcher.InstructionLocation.MatchAfterImmediately
-import app.morphe.patcher.fieldAccess
-import app.morphe.patcher.methodCall
-import app.morphe.patcher.opcode
-import app.morphe.patcher.string
-import com.android.tools.smali.dexlib2.AccessFlags
-import com.android.tools.smali.dexlib2.Opcode
 
 /**
- * Fingerprint to hook Activity.onResume in Medium application.
+ * Fingerprint for Medium's main Application class.
  */
-object ActivityOnResumeFingerprint : Fingerprint(
-    name = "onResume",
-    accessFlags = listOf(AccessFlags.PROTECTED),
-    returnType = "V",
-    parameters = emptyList(),
-    filters = listOf(
-        methodCall(
-            definingClass = "Landroid/app/Activity;",
-            name = "onResume",
-            returnType = "V"
-        )
-    )
+object DonkeyApplicationFingerprint : Fingerprint(
+    definingClass = "Lcom/medium/android/donkey/DonkeyApplication;",
+    name = "onCreate",
+    returnType = "V"
 )
 
 /**
- * Fingerprint to match Medium article paywall / locked status check.
+ * Fingerprint for GraphQL MembershipTier safeValueOf method.
+ * Mocking this method to return MembershipTier.MEMBER unlocks full articles natively!
  */
-object PaywallCheckFingerprint : Fingerprint(
-    name = "isLocked",
-    returnType = "Z",
-    parameters = emptyList(),
-    filters = listOf(
-        string("isLocked"),
-        methodCall(
-            name = "equals",
-            returnType = "Z"
-        ),
-        opcode(Opcode.MOVE_RESULT, MatchAfterImmediately())
-    )
+object MembershipTierFingerprint : Fingerprint(
+    name = "safeValueOf",
+    returnType = "Lcom/medium/android/graphql/type/MembershipTier;",
+    parameters = listOf("Ljava/lang/String;")
 )
 
 /**
- * Fingerprint matching Article viewer Activity or View in Medium.
+ * Fingerprints for PairIP signature and license checks (Play Store error bypass).
  */
-object ArticleViewFingerprint : Fingerprint(
-    definingClass = "Lcom/medium/reader/",
-    name = "onArticleLoaded",
+object PairIPSignatureFingerprint : Fingerprint(
+    name = "verifyIntegrity",
     returnType = "V",
-    filters = listOf(
-        string("article_id")
-    )
+    parameters = listOf("Landroid/content/Context;")
+)
+
+object PairIPLicenseFingerprint : Fingerprint(
+    name = "checkLicense",
+    returnType = "V",
+    parameters = listOf("Landroid/content/Context;")
+)
+
+object PairIPActivityFingerprint : Fingerprint(
+    name = "onStart",
+    returnType = "V",
+    parameters = emptyList()
 )

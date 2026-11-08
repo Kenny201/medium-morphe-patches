@@ -19,9 +19,9 @@ Click the button below, or manually add this repo url to Morphe Manager: https:/
 ## 🩹 Patches list
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.0.1](https://github.com/Kenny201/medium-morphe-patches/releases/tag/v1.0.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;2 patches total
+> **[v1.1.0](https://github.com/Kenny201/medium-morphe-patches/releases/tag/v1.1.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;3 patches total
 <details open>
-<summary>📦 Medium&nbsp;&nbsp;•&nbsp;&nbsp;2 patches</summary>
+<summary>📦 Medium&nbsp;&nbsp;•&nbsp;&nbsp;3 patches</summary>
 <br>
 
 **Package name:** `com.medium.reader`
@@ -33,7 +33,8 @@ Click the button below, or manually add this repo url to Morphe Manager: https:/
 
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
 |----------|----------------|-----------|
-| [Bypass paywall](#bypass-paywall) | Bypasses Medium paywall for member-only articles via Freedium proxy. |  |
+| [Bypass Play Store Check](#bypass-play-store-check) | Bypasses PairIP signature and license checks (Play Store version error). |  |
+| [Bypass paywall](#bypass-paywall) | Unlocks full articles natively by mocking user's MembershipTier to MEMBER. |  |
 | [Translate articles](#translate-articles) | Adds dynamic translation capability to Medium articles using Google Translate API. | • Target Language |
 
 </details>
